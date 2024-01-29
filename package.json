@@ -1,0 +1,19 @@
+{
+  "name": "leesah-game-starter",
+  "version": "1.0.0",
+  "author": "NAVIKT",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev -r tsconfig-paths/register --respawn --inspect=0.0.0.0:9229 ./src/main.ts"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
