@@ -10,6 +10,8 @@ console.log('\n========== ⚡ BOOTING UP ⚡ =========== \n')
 async function boot() {
     try {
         const host = process.env.HOST_IP
+        
+        if (!host) throw new Error("HOST er ikke satt!")
 
         const kafka = new Kafka({
             clientId: 'leesah-game-starter-js',
