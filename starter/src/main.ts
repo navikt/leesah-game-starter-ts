@@ -1,42 +1,13 @@
 import { Kafka, Partitioners } from "kafkajs"
+import { Answer, MessageType, Question } from "./types"
+import { v4 as uuidv4 } from 'uuid';
 
-enum MessageType {
-    Question = "QUESTION",
-    Answer = "ANSWER",
-    Assessment = "ASSESSMENT"
-}
+const TEAM_NAME = "CHANGE ME"
+const HEX_CODE = "CHANGE ME"
+// TODO: change this based on localhost or NAIS
+const QUIZ_TOPIC = "topic-test"
+const CONSUMER_GOUP_ID = "test-group"
 
-enum AssessmentStatus {
-    Success = "SUCCESS",
-    Failure = "FAILURE"
-}
-
-interface LeesahMessage {
-    messageId: string
-    type: MessageType
-    created: string
-}
-
-interface Question extends LeesahMessage {
-    category: string
-    question: string
-}
-
-interface Answer extends LeesahMessage {
-    questionId: string
-    teamName: string
-    answer: string
-}
-
-interface Assessment extends LeesahMessage {
-    questionId: string
-    answerId: string
-    type: MessageType
-    category: string
-    teamName: string
-    status: AssessmentStatus
-    sign: string
-}
 
 console.log('\n========== ⚡ BOOTING UP ⚡ =========== \n')
 
@@ -47,15 +18,14 @@ async function boot() {
         if (!host) throw new Error("HOST er ikke satt!")
 
         const kafka = new Kafka({
-            clientId: 'leesah-game-starter-js',
+            clientId: `leesah-game-${TEAM_NAME}`,
             brokers: [`${host}:9092`]
         })
 
-        const topic = 'topic-test'
-        const consumer = kafka.consumer({ groupId: 'test-group' })
+        const consumer = kafka.consumer({ groupId: CONSUMER_GOUP_ID })
         
         await consumer.connect()
-        await consumer.subscribe({ topic, fromBeginning: true })
+        await consumer.subscribe({ topic: QUIZ_TOPIC })
 
         await consumer.run({
             eachMessage: async ({ message }) => {
@@ -65,10 +35,20 @@ async function boot() {
                         case MessageType.Question: {
                             const questionMessage: Question = parsedMessage
                             if (questionMessage.category == "team-registration") {
-                                // TODO: Post answer with consumer
+                                // TODO: Post answer with producer
+                                const answer: Answer = {
+                                    messageId: uuidv4(),
+                                    type: MessageType.Answer,
+                                    created: new Date().toISOString(),
+                                    questionId: questionMessage.messageId,
+                                    teamName: TEAM_NAME,
+                                    answer: TEAM_NAME
+                                }
+                                console.log(answer)
                             }
                             break
                         }
+                        // TODO: figure out if these are even needed...
                         case MessageType.Answer: {
                             console.log(parsedMessage)
                             break
@@ -79,6 +59,7 @@ async function boot() {
                         }
                         default: {
                             console.error(`Fant ikke kafka melding av riktig type, meldings-type: ${MessageType}`)
+                            console.error(parsedMessage)
                         }
                     }
 

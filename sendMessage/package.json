@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^20.11.16",
+    "@types/uuid": "^9.0.8",
     "kafkajs": "^2.2.4",
-    "ts-node": "^10.9.2"
+    "ts-node": "^10.9.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "typescript": "^5.3.3"
