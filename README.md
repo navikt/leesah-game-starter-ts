@@ -1,4 +1,4 @@
-# leesah-game-starter-js
+# leesah-game-starter-ts
 
 For å spinne opp docker-compose:
 
