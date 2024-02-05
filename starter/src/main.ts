@@ -1,8 +1,41 @@
 import { Kafka, Partitioners } from "kafkajs"
 
-interface Category {
-    theme: string
+enum MessageType {
+    Question = "QUESTION",
+    Answer = "ANSWER",
+    Assessment = "ASSESSMENT"
+}
+
+enum AssessmentStatus {
+    Success = "SUCCESS",
+    Failure = "FAILURE"
+}
+
+interface LeesahMessage {
+    messageId: string
+    type: MessageType
+    created: string
+}
+
+interface Question extends LeesahMessage {
+    category: string
     question: string
+}
+
+interface Answer extends LeesahMessage {
+    questionId: string
+    teamName: string
+    answer: string
+}
+
+interface Assessment extends LeesahMessage {
+    questionId: string
+    answerId: string
+    type: MessageType
+    category: string
+    teamName: string
+    status: AssessmentStatus
+    sign: string
 }
 
 console.log('\n========== ⚡ BOOTING UP ⚡ =========== \n')
@@ -27,8 +60,28 @@ async function boot() {
         await consumer.run({
             eachMessage: async ({ message }) => {
                 if (message.value) {
-                    const messageCategory: Category = JSON.parse(message.value?.toString())
-                    console.log(messageCategory)
+                    const parsedMessage = JSON.parse(message.value?.toString())
+                    switch(parsedMessage.type) {
+                        case MessageType.Question: {
+                            const questionMessage: Question = parsedMessage
+                            if (questionMessage.category == "team-registration") {
+                                // TODO: Post answer with consumer
+                            }
+                            break
+                        }
+                        case MessageType.Answer: {
+                            console.log(parsedMessage)
+                            break
+                        }
+                        case MessageType.Assessment: {
+                            console.log(parsedMessage)
+                            break
+                        }
+                        default: {
+                            console.error(`Fant ikke kafka melding av riktig type, meldings-type: ${MessageType}`)
+                        }
+                    }
+
                 }
             },
           })
