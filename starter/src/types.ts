@@ -12,6 +12,7 @@ export enum AssessmentStatus {
 interface LeesahMessage {
     messageId: string
     type: MessageType
+    category: string
     created: string
 }
 
@@ -30,7 +31,6 @@ export interface Assessment extends LeesahMessage {
     questionId: string
     answerId: string
     type: MessageType
-    category: string
     teamName: string
     status: AssessmentStatus
     sign: string
