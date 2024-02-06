@@ -38,7 +38,7 @@ async function boot() {
 
 
         // TODO: konverter til en loader klasse som returnerer en consumer og en broker som er koblet til topicet
-
+        // TODO: få en skikkelig feilmelding på feil svar i assesment casen
         const consumer = kafka.consumer({ groupId: CONSUMER_GROUP_ID })
         
         await consumer.connect()
