@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 dotenv.config()
 
-const certsYAMLAsJSON = process.env.IS_NAIS ? YAML.parse(fs.readFileSync('../certs/leesah-quiz-certs.yaml', 'utf-8')) : undefined
+const certsYAMLAsJSON = process.env.IS_NAIS ? YAML.parse(fs.readFileSync('./certs/leesah-quiz-certs.yaml', 'utf-8')) : undefined
 
 const QUIZ_TOPIC = certsYAMLAsJSON.topics[0] ?? "topic-test"
 
