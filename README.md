@@ -1,5 +1,5 @@
 # leesah-game-starter-ts
-
+## For lokal utvikling av starteren
 For å spinne opp docker-compose:
 
 Sette opp host:
