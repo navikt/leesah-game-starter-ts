@@ -9,7 +9,7 @@ export enum AssessmentStatus {
     Failure = "FAILURE"
 }
 
-interface LeesahMessage {
+export interface LeesahMessage {
     messageId: string
     type: MessageType
     category: string
