@@ -1,4 +1,6 @@
 # leesah-game-starter-ts
+Muligheten for å spille lessah-game i Node.js og TypeScript!
+
 ## For lokal utvikling av starteren
 For å spinne opp docker-compose:
 
