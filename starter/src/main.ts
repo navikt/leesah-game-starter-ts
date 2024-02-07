@@ -1,6 +1,4 @@
-import { Kafka, KafkaConfig, Partitioners } from "kafkajs"
-import { Answer, MessageType, Question } from "./types"
-import { v4 as uuidv4 } from 'uuid';
+import { MessageType, Question } from "./types"
 import { answerQuestion, loadKafka } from "./utils/kafka";
 
 const TEAM_NAME = "Perkelator"
@@ -18,8 +16,9 @@ async function boot() {
                     const parsedMessage = JSON.parse(message.value?.toString())
                     if (parsedMessage.type === MessageType.Question) {
                         const question: Question = parsedMessage
-                        // TODO: log som JSON
-                        console.log(`Kategori: ${question.category}, Spørsmål: ${question.question}`)
+                        
+                        console.log('\x1b[33m Nytt spørsmål! \x1b[0m')
+                        console.log({ kategori: question.category, spørsmål: question.question})
     
                         if (question.category === "team-registration") {
                             await answerQuestion(producer, TEAM_NAME, question, HEX_CODE)
