@@ -1,5 +1,6 @@
 import { MessageType, Question } from "./types"
 import { answerQuestion, loadKafka } from "./utils/kafka";
+import { logJSON, logYellow } from "./utils/logger";
 
 const TEAM_NAME = "Perkelator"
 const HEX_CODE = "FA8072" 
@@ -17,8 +18,8 @@ async function boot() {
                     if (parsedMessage.type === MessageType.Question) {
                         const question: Question = parsedMessage
                         
-                        console.log('\x1b[33m Nytt spørsmål! \x1b[0m')
-                        console.log({ kategori: question.category, spørsmål: question.question})
+                        logYellow('Nytt spørsmål!')
+                        logJSON({ kategori: question.category, spørsmål: question.question })
     
                         if (question.category === "team-registration") {
                             await answerQuestion(producer, TEAM_NAME, question, HEX_CODE)
