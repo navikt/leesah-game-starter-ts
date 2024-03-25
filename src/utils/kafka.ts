@@ -54,7 +54,13 @@ export const loadKafka = async (
   return { consumer };
 };
 
-export const answerQuestion = async (question: Question, answer: string) => {
+export const answerQuestion = async ({
+  question,
+  answer,
+}: {
+  question: Question;
+  answer: string;
+}) => {
   await producer.send({
     topic: QUIZ_TOPIC,
     messages: [

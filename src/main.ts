@@ -26,7 +26,7 @@ async function boot() {
             });
 
             if (question.category === "team-registration") {
-              await answerQuestion(question, HEX_CODE);
+              await answerQuestion({ question, answer: HEX_CODE });
             } else if (question.category === "kjempekul kategoro") {
               // SVAR VIDERE HER ...
             }
