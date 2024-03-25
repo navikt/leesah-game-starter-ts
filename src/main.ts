@@ -15,7 +15,6 @@ async function boot() {
       eachMessage: async ({ message }) => {
         if (message.value) {
           const parsedMessage = JSON.parse(message.value?.toString());
-          logJSON(parsedMessage);
           if (parsedMessage.type === MessageType.Question) {
             const question: Question = parsedMessage;
 
