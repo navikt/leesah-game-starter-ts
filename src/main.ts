@@ -2,8 +2,8 @@ import { MessageType, Question } from "./types";
 import { answerQuestion, loadKafka } from "./utils/kafka";
 import { logJSON, logYellow } from "./utils/logger";
 
-const TEAM_NAME = "Perkelator";
-const HEX_CODE = "FA8072";
+const TEAM_NAME = "***your team name***";
+const HEX_CODE = "***your team color***";
 
 console.log("\n========== ⚡ BOOTING UP ⚡ =========== \n");
 
@@ -25,7 +25,7 @@ async function boot() {
             });
 
             if (question.category === "team-registration") {
-              await answerQuestion({ question, answer: HEX_CODE });
+              // await answerQuestion({ question, answer: HEX_CODE });
             } else if (question.category === "kjempekul kategoro") {
               // SVAR VIDERE HER ...
             }
