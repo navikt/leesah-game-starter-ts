@@ -9,12 +9,13 @@ console.log("\n========== ⚡ BOOTING UP ⚡ =========== \n");
 
 async function boot() {
   try {
-    const { consumer, producer } = await loadKafka(TEAM_NAME);
+    const { consumer } = await loadKafka(TEAM_NAME);
 
     await consumer.run({
       eachMessage: async ({ message }) => {
         if (message.value) {
           const parsedMessage = JSON.parse(message.value?.toString());
+          logJSON(parsedMessage);
           if (parsedMessage.type === MessageType.Question) {
             const question: Question = parsedMessage;
 
@@ -25,7 +26,7 @@ async function boot() {
             });
 
             if (question.category === "team-registration") {
-              await answerQuestion(producer, TEAM_NAME, question, HEX_CODE);
+              await answerQuestion(TEAM_NAME, question, HEX_CODE);
             } else if (question.category === "kjempekul kategoro") {
               // SVAR VIDERE HER ...
             }

@@ -19,9 +19,11 @@ const CONSUMER_GROUP_ID = process.env.IS_NAIS
   ? `new-group-${Math.random()}`
   : "test-group";
 
+let producer: Producer;
+
 export const loadKafka = async (
   teamName: string,
-): Promise<{ consumer: Consumer; producer: Producer }> => {
+): Promise<{ consumer: Consumer }> => {
   if (!BROKER_URL)
     throw new Error(`Broker url er feil! Broker url: ${BROKER_URL}`);
 
@@ -43,14 +45,13 @@ export const loadKafka = async (
   await consumer.connect();
   await consumer.subscribe({ topic: QUIZ_TOPIC, fromBeginning: true });
 
-  const producer = kafka.producer();
+  producer = kafka.producer();
   await producer.connect();
 
-  return { consumer, producer };
+  return { consumer };
 };
 
 export const answerQuestion = async (
-  producer: Producer,
   teamName: string,
   question: Question,
   answer: string,
