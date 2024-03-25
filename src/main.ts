@@ -1,42 +1,44 @@
-import { MessageType, Question } from "./types"
+import { MessageType, Question } from "./types";
 import { answerQuestion, loadKafka } from "./utils/kafka";
 import { logJSON, logYellow } from "./utils/logger";
 
-const TEAM_NAME = "Perkelator"
-const HEX_CODE = "FA8072" 
+const TEAM_NAME = "Perkelator";
+const HEX_CODE = "FA8072";
 
-console.log('\n========== ⚡ BOOTING UP ⚡ =========== \n')
+console.log("\n========== ⚡ BOOTING UP ⚡ =========== \n");
 
 async function boot() {
-    try {
-        const { consumer, producer } = await loadKafka(TEAM_NAME)
+  try {
+    const { consumer, producer } = await loadKafka(TEAM_NAME);
 
-        await consumer.run({
-            eachMessage: async ({ message }) => {
-                if (message.value) {
-                    const parsedMessage = JSON.parse(message.value?.toString())
-                    if (parsedMessage.type === MessageType.Question) {
-                        const question: Question = parsedMessage
-                        
-                        logYellow('Nytt spørsmål!')
-                        logJSON({ kategori: question.category, spørsmål: question.question })
-    
-                        if (question.category === "team-registration") {
-                            await answerQuestion(producer, TEAM_NAME, question, HEX_CODE)
-                        } else if (question.category === "kjempekul kategoro") {
-                            // SVAR VIDERE HER ...
-                        }
-                    }
-                } else {
-                    console.error('Kafka meldingen har ingen verdi!')
-                }
-            },
-          })
+    await consumer.run({
+      eachMessage: async ({ message }) => {
+        if (message.value) {
+          const parsedMessage = JSON.parse(message.value?.toString());
+          if (parsedMessage.type === MessageType.Question) {
+            const question: Question = parsedMessage;
 
-    } catch(error) {
-        console.log('\n\n=========== 💥  TERROR 💥  ============\n\n')
-        console.log(error)
-    }
+            logYellow("Nytt spørsmål!");
+            logJSON({
+              kategori: question.category,
+              spørsmål: question.question,
+            });
+
+            if (question.category === "team-registration") {
+              await answerQuestion(producer, TEAM_NAME, question, HEX_CODE);
+            } else if (question.category === "kjempekul kategoro") {
+              // SVAR VIDERE HER ...
+            }
+          }
+        } else {
+          console.error("Kafka meldingen har ingen verdi!");
+        }
+      },
+    });
+  } catch (error) {
+    console.log("\n\n=========== 💥  TERROR 💥  ============\n\n");
+    console.log(error);
+  }
 }
 
-void boot()
+void boot();
