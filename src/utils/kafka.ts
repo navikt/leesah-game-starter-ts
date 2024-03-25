@@ -20,15 +20,18 @@ const CONSUMER_GROUP_ID = process.env.IS_NAIS
   : "test-group";
 
 let producer: Producer;
+let teamName: string;
 
 export const loadKafka = async (
-  teamName: string,
+  team: string,
 ): Promise<{ consumer: Consumer }> => {
   if (!BROKER_URL)
     throw new Error(`Broker url er feil! Broker url: ${BROKER_URL}`);
 
+  teamName = team;
+
   const kafka = new Kafka({
-    clientId: `leesah-game-${teamName}`,
+    clientId: `leesah-game-${team}`,
     brokers: [BROKER_URL],
     ssl:
       process.env.IS_NAIS === "true"
@@ -51,11 +54,7 @@ export const loadKafka = async (
   return { consumer };
 };
 
-export const answerQuestion = async (
-  teamName: string,
-  question: Question,
-  answer: string,
-) => {
+export const answerQuestion = async (question: Question, answer: string) => {
   await producer.send({
     topic: QUIZ_TOPIC,
     messages: [
