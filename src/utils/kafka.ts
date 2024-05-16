@@ -8,14 +8,14 @@ import { MessageType, Question } from "../types";
 dotenv.config();
 
 const certsYAMLAsJSON =
-  process.env.IS_NAIS === "true"
-    ? YAML.parse(fs.readFileSync("./certs/leesah-quiz-certs.yaml", "utf-8"))
+  process.env.STUDENT_KURS === "true"
+    ? YAML.parse(fs.readFileSync("./certs/student-certs.yaml", "utf-8"))
     : undefined;
 
 const QUIZ_TOPIC = certsYAMLAsJSON?.topics[0] ?? "topic-test";
 
 const BROKER_URL = certsYAMLAsJSON?.broker ?? `${process.env.HOST_IP}:9092`;
-const CONSUMER_GROUP_ID = process.env.IS_NAIS
+const CONSUMER_GROUP_ID = process.env.STUDENT_KURS
   ? `new-group-${Math.random()}`
   : "test-group";
 
@@ -34,7 +34,7 @@ export const loadKafka = async (
     clientId: `leesah-game-${team}`,
     brokers: [BROKER_URL],
     ssl:
-      process.env.IS_NAIS === "true"
+      process.env.STUDENT_KURS === "true"
         ? {
             rejectUnauthorized: false,
             ca: [certsYAMLAsJSON.ca],
