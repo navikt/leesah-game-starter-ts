@@ -29,33 +29,18 @@ Unzip sertifikatet, da skal du ha en `student-certs.yaml` fil tilgjengelig. Plas
     ├── src
     ...
 
+### Sett opp lag i `main.ts`
+Sett opp ditt lag ved å gi deg selv et lag-navn og hex-kode:
+```js
+// ./src/main.ts
+
+const TEAM_NAME = "***your team name***";
+const HEX_CODE = "***your team color***";
+```
+
 ### Kjør starteren
 
 ```bash
 npm run start
 ```
 
----
----
----
-
-## For lokal utvikling
-
-For å spinne opp docker-compose:
-
-Sette opp host:
-
-```bash
-export HOST_IP=$(ifconfig | grep -E "([0-9]{1,3}\.){3}[0-9]{1,3}" | grep -v 127.0.0.1 | awk '{ print $2 }' | cut -f2 -d: | head -n1)
-```
-
-Sett miljøvariablen i .env til å peke mot lokal kjøring av kafka:
-```bash
-STUDENT_KURS=false
-```
-
-Kjør docker compose
-
-```bash
-docker compose up -d
-```
