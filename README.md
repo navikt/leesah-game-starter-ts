@@ -10,12 +10,6 @@ For å kunne bruke starteren trenger du Node v21+ og npm v10+
 
 Hvis du vil bruke yarn istedenfor npm fungerer dette også fint.
 
-### Installer pakker
-
-```bash
-npm install
-```
-
 ### Hent Kafkasertifikat
 
 Sertifikater for å koble seg på Kafka ligger tilgjengelig på [leesah-game-cert.ekstern.dev.nav.no/certs](https://leesah-game-cert.ekstern.dev.nav.no/certs), brukernavn og passord skal du få utdelt.
@@ -25,9 +19,14 @@ Unzip sertifikatet, da skal du ha en `student-certs.yaml` fil tilgjengelig. Plas
     .
     ├── certs                   
         └── *** PLASSER student-certs.yaml HER ***
-    ├── node_modules
     ├── src
     ...
+
+### Installer pakker
+
+```bash
+npm install
+```
 
 ### Sett opp lag i `main.ts`
 Sett opp ditt lag ved å gi deg selv et lag-navn og hex-kode:
