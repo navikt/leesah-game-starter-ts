@@ -12,7 +12,7 @@ const certsYAMLAsJSON =
     ? YAML.parse(fs.readFileSync("./certs/student-certs.yaml", "utf-8"))
     : undefined;
 
-const QUIZ_TOPIC = certsYAMLAsJSON?.topics[0] ?? "topic-test";
+const QUIZ_TOPIC = certsYAMLAsJSON?.topics[1] ?? "topic-test";
 
 const BROKER_URL = certsYAMLAsJSON?.broker ?? `${process.env.HOST_IP}:9092`;
 const CONSUMER_GROUP_ID = process.env.STUDENT_KURS
